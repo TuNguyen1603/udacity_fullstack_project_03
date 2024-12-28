@@ -1,4 +1,19 @@
 # MyStore
+My Store Application
+Description
+Welcome to My Store Application! This is a single-page e-commerce application built with Angular. It allows users to browse products, add them to a cart, and complete a purchase. The application includes the following key features and functionalities:
+
+Product List: Browse a list of products with relevant information such as product name, price, and image.
+
+Product Details: View detailed information about each product including name, price, description, and a larger image.
+
+Shopping Cart: Add products to a shopping cart, view the total cost, and adjust quantities.
+
+Checkout: Submit the cart with customer information (full name, address, credit card number) and view an order confirmation.
+
+Order Confirmation: Receive a confirmation of the order with all relevant details displayed.
+
+Responsive Design: The application is styled with CSS to ensure a great user experience on both desktop and mobile devices.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
 
