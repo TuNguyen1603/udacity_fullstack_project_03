@@ -1,0 +1,18 @@
+<div class="confirmation-container">
+  <div class="confirmation-items">
+    <h1 class="confirmation-header">Order Confirmed!</h1>
+    <div class="confirmation-item">
+      <strong>Full Name:</strong> {{ cart.fullName }}
+    </div>
+    <div class="confirmation-item">
+      <strong>Address:</strong> {{ cart.address }}
+    </div>
+    <div class="confirmation-item">
+      <strong>Total:</strong> {{ cart.total | currency }}
+    </div>
+    <div class="confirmation-item">
+      <strong>Shipping Time:</strong> Please allow 1-3 business days for shipping.
+    </div>
+    <button (click)="backToProductList()">Back to product list</button>
+  </div>
+</div>

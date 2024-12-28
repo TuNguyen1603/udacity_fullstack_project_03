@@ -1,0 +1,10 @@
+.product_containers {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product_containers > .product-item {
+  flex: 1 1 calc(33.33% - 10px);
+  max-width: calc(33.33% - 10px);
+  box-sizing: border-box;
+}

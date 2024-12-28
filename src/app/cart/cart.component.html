@@ -1,0 +1,38 @@
+<div *ngIf="cart.products.length > 0; else emptyCart" class="cart-container">
+  <div class="cart-panel">
+    <div class="cart-item" *ngFor="let product of cart.products">
+      <img [src]="product.url" alt="{{ product.name }}">
+      <div class="cart-item-details">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p>Price: {{ product.price | currency }}</p>
+        <p>Quantity: {{ product.quantity }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="cart-summary">
+    <form (submit)="submitOrder()">
+      <div class="form-margin">
+        <label for="fullName">Full Name:</label>
+        <input id="fullName" type="text" [(ngModel)]="fullName" name="fullName" required>
+      </div>
+      <div class="form-margin">
+        <label for="address">Address:</label>
+        <input id="address" type="text" [(ngModel)]="address" name="address" required>
+      </div>
+      <div class="form-margin">
+        <label for="creditNumber">Credit Card Number:</label>
+        <input id="creditNumber" type="text" [(ngModel)]="creditNumber" name="creditNumber" required>
+      </div>
+      <div class="form-margin">
+        <p>Total: {{ cart.total | currency }}</p>
+      </div>
+      <button type="submit">Submit Order</button>
+    </form>
+    </div>
+</div>
+<ng-template #emptyCart>
+  <div class="empty-cart-message">
+    <p>Your cart is empty.</p>
+  </div>
+</ng-template>
