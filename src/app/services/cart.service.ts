@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { CartModel } from '../modules/cart.module';
 import { ProductModel } from '../modules/product.module';
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
   private cart: CartModel;
@@ -17,16 +15,18 @@ export class CartService {
       address: '',
       creditNumber: '',
       total: 0,
-      products: []
+      products: [],
     };
   }
 
   addOrEditCartItem(item: ProductModel): void {
-    const existingProduct = this.cart.products.find(product => product.id === item.id);
+    const existingProduct = this.cart.products.find(
+      (product) => product.id === item.id
+    );
     if (!existingProduct) {
       this.cart.products.push(item);
     } else {
-      this.cart.products = this.cart.products.map(product => {
+      this.cart.products = this.cart.products.map((product) => {
         if (product.id === item.id) {
           return { ...product, ...item };
         }
@@ -36,8 +36,20 @@ export class CartService {
     this.calculateTotal();
   }
 
-  removeCartItem(item: ProductModel): void {
-    this.cart.products = this.cart.products.filter(product => product.id !== item.id);
+  updateQuantity(productId: number, quantity: number): void {
+    this.cart.products = this.cart.products.map((product) => {
+      if (product.id === productId) {
+        return { ...product, quantity: quantity };
+      }
+      return product;
+    });
+    this.calculateTotal();
+  }
+
+  removeCartItem(productId: number): void {
+    this.cart.products = this.cart.products.filter(
+      (product) => product.id !== productId
+    );
     this.calculateTotal();
   }
 
@@ -54,7 +66,10 @@ export class CartService {
   }
 
   private calculateTotal(): void {
-    this.cart.total = this.cart.products.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    this.cart.total = this.cart.products.reduce(
+      (acc, product) => acc + product.price * product.quantity,
+      0
+    );
     localStorage.setItem('cart', JSON.stringify(this.cart));
   }
 
@@ -65,7 +80,7 @@ export class CartService {
       address: '',
       creditNumber: '',
       total: 0,
-      products: []
+      products: [],
     };
   }
 }

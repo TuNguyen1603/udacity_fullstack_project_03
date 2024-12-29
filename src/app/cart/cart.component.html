@@ -1,12 +1,21 @@
 <div *ngIf="cart.products.length > 0; else emptyCart" class="cart-container">
   <div class="cart-panel">
     <div class="cart-item" *ngFor="let product of cart.products">
-      <img [src]="product.url" alt="{{ product.name }}">
+      <img [src]="product.url" alt="{{ product.name }}" />
       <div class="cart-item-details">
         <h3>{{ product.name }}</h3>
         <p>{{ product.description }}</p>
         <p>Price: {{ product.price | currency }}</p>
-        <p>Quantity: {{ product.quantity }}</p>
+        <p>
+          Quantity:
+          <input
+            type="number"
+            [(ngModel)]="product.quantity"
+            (ngModelChange)="updateQuantity(product.id, $event)"
+            min="1"
+          />
+        </p>
+        <button (click)="removeFromCart(product.id)">Remove</button>
       </div>
     </div>
   </div>
@@ -14,22 +23,53 @@
     <form (submit)="submitOrder()">
       <div class="form-margin">
         <label for="fullName">Full Name:</label>
-        <input id="fullName" type="text" [(ngModel)]="fullName" name="fullName" required>
+        <input
+          id="fullName"
+          type="text"
+          [(ngModel)]="fullName"
+          name="fullName"
+          required
+        />
+        <div *ngIf="fullName.length < 3 && fullName.length > 0" class="error">
+          Full Name must be at least 3 characters long.
+        </div>
       </div>
       <div class="form-margin">
         <label for="address">Address:</label>
-        <input id="address" type="text" [(ngModel)]="address" name="address" required>
+        <input
+          id="address"
+          type="text"
+          [(ngModel)]="address"
+          name="address"
+          required
+        />
+        <div *ngIf="address.length < 5 && address.length > 0" class="error">
+          Address must be at least 5 characters long.
+        </div>
       </div>
       <div class="form-margin">
         <label for="creditNumber">Credit Card Number:</label>
-        <input id="creditNumber" type="text" [(ngModel)]="creditNumber" name="creditNumber" required>
+        <input
+          id="creditNumber"
+          type="text"
+          [(ngModel)]="creditNumber"
+          name="creditNumber"
+          required
+          pattern="\d{16}"
+        />
+        <div
+          *ngIf="creditNumber.length !== 16 && creditNumber.length > 0"
+          class="error"
+        >
+          Credit Card Number must be 16 digits long.
+        </div>
       </div>
       <div class="form-margin">
         <p>Total: {{ cart.total | currency }}</p>
       </div>
-      <button type="submit">Submit Order</button>
+      <button type="submit" [disabled]="!isValidForm()">Submit Order</button>
     </form>
-    </div>
+  </div>
 </div>
 <ng-template #emptyCart>
   <div class="empty-cart-message">
